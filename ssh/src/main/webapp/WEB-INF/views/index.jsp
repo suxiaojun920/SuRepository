@@ -27,6 +27,14 @@
 							<td>${b.bookInfo}</td>
 						</tr>
 					</c:forEach>
+					<tr>
+						<td colspan="5" align="right">
+							<a href="loadAll?page=1&rows=10">首页</a>
+							<a href="loadAll?page=${currentPage-1}&rows=10">上一页</a>
+							<a href="loadAll?page=${currentPage+1}&rows=10">下一页</a>
+							<a href="loadAll?page=${maxPage}&rows=10">末页</a>
+						</td>
+					</tr>
 				</table>
 			</form>
 		</div>
