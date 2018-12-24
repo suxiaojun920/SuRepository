@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="css/easyui.css">
+	<link rel="stylesheet" type="text/css" href="css/icon.css">
+	<link rel="stylesheet" type="text/css" href="css/demo.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+</head>
+<body>
+	<div id="p" class="easyui-panel" title="数据信息" style="width:100%;height:380px;padding:10px;">
+		<table class="easyui-datagrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true,url:'http://localhost/loadAll',method:'get',
+						  rownumbers:true,pagination:true,pageSize:10,footer:'#ft'">
+			<thead>
+				<tr>
+					<th data-options="field:'bookId',width:80">Book ID</th>
+					<th data-options="field:'bookName',width:100">Book Name</th>
+					<th data-options="field:'bookAuthor',width:80,align:'right'">Book Author</th>
+					<th data-options="field:'bookPrice',width:80,align:'right'">Book Price</th>
+					<th data-options="field:'bookInfo',width:250">Book Info</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<div id="ft" style="padding:2px 5px;text-align: right;">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true">保存</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除s</a>
+	</div>
+	<br/>
+	<div id="p" class="easyui-panel" title="Fluid Panel" style="width:100%;height:200px;padding:10px;">
+		
+	</div>
+</body>
+</html>
