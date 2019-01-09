@@ -19,5 +19,9 @@ public class BookServiceImpl implements IBookService{
 		PageHelper.startPage(page, rows);
 		return bookDao.loadAll();
 	}
+	@Override
+	public Book loadById(int bookId) {
+		return bookDao.loadById(bookId);
+	}
 	
 }

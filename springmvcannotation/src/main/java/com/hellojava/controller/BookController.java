@@ -3,6 +3,7 @@ package com.hellojava.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +20,10 @@ public class BookController {
 	public List<Book> loadAll(@RequestParam(required=false,defaultValue="1") int page,@RequestParam(required=false,defaultValue="10") int rows){
 		List<Book> bookList=bookService.loadAll(page,rows);
 		return bookList;
+	}
+	
+	@RequestMapping("/loadById/{id}")
+	public Book loadAll(@PathVariable("id")int bookId){
+		return bookService.loadById(bookId);
 	}
 }

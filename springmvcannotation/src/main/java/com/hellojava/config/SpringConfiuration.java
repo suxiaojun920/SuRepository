@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassRelativeResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -58,7 +59,7 @@ public class SpringConfiuration {
 		SqlSessionFactoryBean sqlSessionFactory=new SqlSessionFactoryBean();
 		sqlSessionFactory.setTypeAliasesPackage("com.hellojava.entity");
 		sqlSessionFactory.setPlugins(new Interceptor[] {pageInterceptor});
-		sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/hellojava/mappers/*.xml"));
+//		sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/hellojava/mappers/*.xml"));
 		sqlSessionFactory.setDataSource(dataSource);
 		return sqlSessionFactory.getObject();
 	}

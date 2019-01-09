@@ -114,5 +114,16 @@
   </dependencies>
   <build>
     <finalName>springmvcannotation</finalName>
+    <!-- 配置不需要web.xml文件 -->
+    <plugins>
+    	<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-war-plugin</artifactId>
+	        <version>3.2.2</version>
+	        <configuration>
+	        	<failOnMissingWebXml>false</failOnMissingWebXml>
+	        </configuration>
+	    </plugin>
+    </plugins>
   </build>
 </project>
