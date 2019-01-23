@@ -14,6 +14,7 @@ function myquery(str){
 	}
 }
 
+
 myquery.prototype.focus=function(handler){
 	this.obj.addEventListener("focus",handler);
 }
