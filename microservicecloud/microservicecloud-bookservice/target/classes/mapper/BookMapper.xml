@@ -1,0 +1,22 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.microservicecloud.dao.IBookDao">
+	<select id="loadAll" resultType="book">
+		select * from book
+	</select>
+	<insert id="save" parameterType="book">
+		insert into book values(default,#{bookName},#{bookAuthor},#{bookPrice},#{bookInfo})
+	</insert>
+	<delete id="delete" parameterType="book">
+		delete from book where bookId=#{bookId}
+	</delete>
+	<update id="update" parameterType="book">
+		update book set bookName=#{bookName},bookAuthor=#{bookAuthor},bookPrice=#{bookPrice},
+			bookInfo=#{bookInfo} where bookId=#{bookId}
+	</update>
+	
+	<select id="get" parameterType="int" resultType="book">
+		select * from book where bookId=#{bookId}
+	</select>
+</mapper>
