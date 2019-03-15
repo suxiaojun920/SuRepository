@@ -12,33 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.microservicecloud.api.Book;
 import com.microservicecloud.service.IBookService;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 
 @RestController
 public class ViewController {
 	@Autowired
 	private IBookService bookService;
-	
 	@RequestMapping(path= {"book/loadAll"},method=RequestMethod.GET)
 	public List<Book> loadAll(){
 		return bookService.loadAll();
 	}
-	
 	@RequestMapping(path= {"book/load/{bookId}"},method=RequestMethod.GET)
 	public Book load(@PathVariable("bookId")int bookId) {
 		return bookService.get(bookId);
 	}
-	
 	@RequestMapping(path= {"book/add"},method=RequestMethod.POST)
 	public boolean save(@RequestBody Book book) {
 		return bookService.save(book);
 	}
-	
 	@RequestMapping(path= {"book/delete"},method=RequestMethod.POST)
 	public boolean delete(@RequestBody Book book) {
-		System.out.println(book);
 		return bookService.delete(book);
 	}
-	
 	@RequestMapping(path= {"book/update"},method=RequestMethod.POST)
 	public boolean update(@RequestBody Book book) {
 		return bookService.update(book);

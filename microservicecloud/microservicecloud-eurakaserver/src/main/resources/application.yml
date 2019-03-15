@@ -1,0 +1,7 @@
+server:
+  port: 7001
+  
+eureka:
+  instance:    hostname: eureka7001.com #euraka服务的名字  client:    register-with-eureka: false #标识当前工程是一个euraka的服务器不需要注册
+    fetch-registry: false #标识当前工程不需要检测
+    service-url:      defaultZone: http://eureka7002.com:7002/eureka/
