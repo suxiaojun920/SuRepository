@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.divclass{
+				color: red;
+			}
+		</style>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<!--注意一定要有vue绑定元素(div 就是当前vue绑定对象)-->
+		<div id="app3">
+		<!--v-model 说明当前元素的属性值是绑定的vue对象的data内部的chk的数据 v-model 可以双向绑定(vue对象数据和元素数据相互影响)-->
+		<label>hello:</label><input type="checkbox" v-model="chk" onchange="demo()"/>
+		<!--当前元素绑定class属性 当chk==true的时候class属性使用divclass 否则不使用
+			语法:v-bind 表示绑定 class 表示当前元素的class属性绑定-->
+		<div v-bind:class="{'divclass' : chk}">
+			你好世界
+		</div>
+		</div>
+		<script>
+			var v=new Vue({
+				el:'#app3',
+				data:{
+					chk:true
+				}
+			});
+			//每次改变checked元素的状态会自动更新vue对象中chk的值
+			function demo(){
+				alert(v.chk);
+			}
+		</script>
+	</body>
+</html>

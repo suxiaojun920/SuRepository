@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue change</title>
+		<script type="text/javascript"src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app1">
+			<ul>
+				<li>{{li1}}</li>
+				<li>{{li2}}</li>
+				<li>{{li3}}</li>
+				<li>{{li4}}</li>
+				<li>{{li5}}</li>
+				<li>{{mymethod()}}</li>
+			</ul>
+		</div>
+		<button type="button" onclick="demo()">按钮1</button>
+		<script>
+			var vue=new Vue({
+				el:'#app1',
+				data:{
+					li1:'hello1',
+					li2:'hello2',
+					li3:'hello3',
+					li4:'hello4',
+					li5:'hello5'
+				},
+				methods:{
+					mymethod:function(){
+						return this.li1+"你好世界";
+					}
+				}
+			})
+		</script>
+		<script>
+			function demo(){
+				vue.li1="你好呀Vue";
+				alert(vue.mymethod());
+				//访问vue的el属性//访问数据(data的内容)可以直接访问,但是访问Vue元素的属性例如 el,data等需要使用$
+				alert(vue.$el);
+				alert(vue.$data.li1);
+			}
+		</script>
+	</body>
+</html>

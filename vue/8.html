@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<!--v-model 相互影响-->
+		<div id="app7">
+		{{message}}
+		<input type="text" v-model="message" />
+		<button type="button" v-on:click="demo">按钮</button>
+		</div>
+		
+		</script>
+		<script>
+			new Vue({
+				el:'#app7',
+				data:{
+					message:'你好世界'
+				},
+				methods:{
+					demo:function(){
+						this.message="点击按钮改变message";
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue循环</title>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app9">
+			<ul>
+				<li v-for="site in sites">
+					{{site.name}}
+				</li>
+			</ul>
+		</div>
+		----------------------------------------------------------------
+		<div id="app10">
+			<ul>
+				<li v-for="o in obj">
+					{{o}}
+				</li>
+			</ul>
+			<ul>
+				<li v-for="(value,key) in obj">
+					{{key}}:{{value}}
+				</li>
+			</ul>
+			<ul>
+				<li v-for="(value, key, index) in obj">
+				 {{ index }}. {{ key }} : {{ value }}
+				</li>
+			</ul>
+			<!--固定循环10此-->  
+			<ul>
+				<li v-for="n in 10">
+				 {{ n }}
+				</li>
+			</ul>
+		</div>
+		
+		<script>
+			new Vue({
+			  el: '#app9',
+			  data: {
+				sites: [
+				  { name: 'Runoob' },
+				  { name: 'Google' },
+				  { name: 'Taobao' }
+				]
+			  }
+			});
+			new Vue({
+			  el: '#app10',
+			  data: {
+				obj: {
+				  name: 'Vue教程',
+				  url: 'http://www.hellojava.com',
+				  slogan: '学的不仅是技术，更是梦想！'
+				}
+			  }
+			})
+		</script>
+	</body>
+</html>

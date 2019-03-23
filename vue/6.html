@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app5">
+			<!--v-if 判断 当see为true的时候显示元素-->
+			<p v-if="see">hello,我看见你了</p>
+		</div>
+		<button type="button" onclick="demo()">按钮</button>
+		-------------------------------------------------------------------
+		<div id="app6">
+			<pre>
+				<a v-bind:href="url">hello</a>
+			</pre>
+		</div>
+		<script>
+			var v=new Vue({
+				el:'#app5',
+				data:{
+					see:true
+				}
+			});
+			
+			new Vue({
+				el:'#app6',
+				data:{
+					url:"http://www.baidu.com"
+				}
+			})
+			function demo(){
+				v.see=!v.see;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue过滤器</title>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app8">
+			{{message | myfilter}}
+		</div>
+		<script>
+			new Vue({
+				el:'#app8',
+				data:{
+					message:'runoob'
+				},//定义过滤器,让message字符为奇数的转换为大写
+				filters:{
+					myfilter:function(value){
+						if(!value) return '';
+						value=value.toString();
+						var i=0;
+						var v="";
+						while(i<value.length){
+							if(i%2!=0)
+								v+=value.charAt(i).toUpperCase();
+							else
+								v+=value.charAt(i);
+							i++;
+						}
+						return v;
+					}
+				}
+			})
+		</script>
+		
+		注意:<a v-bind:href="url"> 可以缩写为 <a :href="url">
+		    <button type="button" v-on:click="demo">按钮</button> 可以缩写为
+			<button type="button" @click="demo">按钮</button>
+	</body>
+</html>

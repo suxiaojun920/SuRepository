@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app4">
+			{{5+5}}<br/>
+			{{1==1?'yes':'no'}}<br/>
+			{{ok?'hello':'你好'}}<br/>
+			{{message.split(' ').reverse().join('-')}}<br/>
+			<input type="text" v-bind:value="'list'+id" />
+		</div>
+		<script>
+			new Vue({
+				el:'#app4',
+				data:{
+					ok:true,
+					message:'a b c d e f g',
+					id:1
+				}
+			})
+		</script>
+	</body>
+</html>
