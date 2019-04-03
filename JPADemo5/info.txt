@@ -1,0 +1,1 @@
+JPA+Hibernate 集合映射(set集合元素类型为对象)主键必须在管理的对象的列上添加column(nullable=false)(注意是全部列)

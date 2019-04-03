@@ -1,0 +1,1 @@
+JPA+Hibernate 集合映射(List集合元素类型为对象)

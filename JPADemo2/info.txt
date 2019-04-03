@@ -1,0 +1,1 @@
+JPA+Hibernate 集合映射 List(元素类型为基本数据类型)(List 自动添加主键列(如果存在orderColumn 则为联合主键))

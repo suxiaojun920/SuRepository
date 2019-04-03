@@ -1,0 +1,1 @@
+JPA+Hibernate 集合映射(set集合元素类型为对象)@MapKeyColumn(name = "M_KEY")主键(使用MapKeyColumn)
