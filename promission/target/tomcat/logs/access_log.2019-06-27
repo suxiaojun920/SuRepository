@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [27/Jun/2019:14:33:29 +0800] "GET /promission/loginview HTTP/1.1" 200 1732 http-bio-8080-exec-1 126
+0:0:0:0:0:0:0:1 - - [27/Jun/2019:14:39:28 +0800] "GET /promission/loginview HTTP/1.1" 304 - http-bio-8080-exec-1 166
+0:0:0:0:0:0:0:1 - - [27/Jun/2019:14:42:34 +0800] "GET /promission/loginview HTTP/1.1" 200 - http-bio-8080-exec-1 95
+0:0:0:0:0:0:0:1 - - [27/Jun/2019:14:43:25 +0800] "GET /promission/loginview HTTP/1.1" 200 - http-bio-8080-exec-2 101

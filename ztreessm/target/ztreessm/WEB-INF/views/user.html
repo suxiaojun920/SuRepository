@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="jquery/jquery.min.js"></script>
+    <script src="ztree/jquery.ztree.all-3.5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="ztree/zTreeStyle.css">
+    <script type="text/javascript">
+
+        function setFontCss(treeId, treeNode) {
+            return treeNode.level == 1 ? {color:"red"} : {};
+        };
+
+
+        var setting = {
+            check: {
+                enable: true//启动多选框记得导入jquery.ztree.excheck-3.4.js
+            },
+
+            data: {
+                simpleData: {
+                    enable: true,//如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId，并且让数据满足父子关系。
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 1
+                }
+            },
+
+
+            view: {
+                showLine: false,//显示连接线
+                showIcon: true,//显示节点图片
+                //fontCss: {color:"red"}
+                fontCss: setFontCss//节点颜色
+            },
+
+            async: {    //ztree异步请求数据
+                enable: true,
+                url: "loadtreeview",//请求action方法
+                autoparam:["id"]
+            }
+        };
+
+        $(function(){
+            /**
+             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+             alert("treeObj  :  "+treeObj);
+             var nodes = treeObj.getSelectedNodes();
+             alert("nodes    :  "+nodes);
+             if (nodes.length>0) {
+                treeObj.reAsyncChildNodes(nodes[0], "refresh");
+            }
+
+             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+             var nodes = treeObj.getNodes();
+             if (nodes.length>0) {
+                nodes[0].name = "test";
+                treeObj.updateNode(nodes[0]);
+
+            }
+             */
+            alert(1);
+            $.fn.zTree.init($("#treeDemo"), setting);
+        });
+
+    </script>
+</head>
+<body>
+<div class="zTreeDemoBackground left">
+    <ul id="treeDemo" class="ztree">
+    </ul>
+</div>
+</body>
+</html>

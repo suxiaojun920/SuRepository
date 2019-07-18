@@ -1,0 +1,11 @@
+com\hellojava\dao\BookDao.class
+com\hellojava\entity\Book.class
+com\hellojava\entity\User.class
+com\hellojava\business\IBookService.class
+com\hellojava\business\IUserService.class
+com\hellojava\controller\ViewController.class
+com\hellojava\business\impl\BookService.class
+com\hellojava\business\impl\UserService.class
+com\hellojava\dao\UserDao.class
+com\hellojava\controller\UserController.class
+com\hellojava\controller\BookController.class

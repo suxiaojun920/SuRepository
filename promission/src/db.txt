@@ -1,0 +1,33 @@
+users(
+userId 主键
+userName
+userPwd
+)
+
+role(
+  roleId 主键
+  roleName
+)
+
+promission(
+   id 主键
+   pId 父节点的id
+   name 文本
+   url 连接地址
+   icon 图标
+   *open
+   *checked
+   *children
+)
+
+user_role(
+   userId 外键
+   roleId 外键
+   (userId,roleId) 主键
+)
+
+role_promission(
+   roleId 外键
+   promissionId 外键
+   (roleId,promissionId) 主键
+)

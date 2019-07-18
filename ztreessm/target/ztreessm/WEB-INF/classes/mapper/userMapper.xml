@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hellojava.dao.UserDao">
+    <resultMap id="userResult" type="user">
+        <id property="userId" column="uid"></id>
+        <result property="userName" column="userName"></result>
+        <result property="userPwd" column="userPwd"></result>
+        <association property="role" javaType="role" column="uid"
+                     select="com.hellojava.dao.RoleDao.loadRoleByUserId">
+        </association>
+    </resultMap>
+    <select id="loadUser" parameterType="user" resultMap="userResult">
+        select * from users where userName=#{userName} and userPwd=md5(#{userPwd})
+    </select>
+</mapper>

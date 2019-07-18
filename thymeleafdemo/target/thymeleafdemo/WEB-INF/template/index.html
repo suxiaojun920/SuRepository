@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="height: 20px;"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>书籍编号</th>
+                        <th>书籍名称</th>
+                        <th>书籍作者</th>
+                        <th>书籍价格</th>
+                        <th>书籍信息</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="b:${bookList}">
+                        <td th:text="${b.bookId}"></td>
+                        <td th:text="${b.bookName}"></td>
+                        <td th:text="${b.bookAuthor}"></td>
+                        <td th:text="${b.bookPrice}"></td>
+                        <td th:text="${b.bookInfo}"></td>
+                        <td width="150">
+                            <button type="button" class="btn glyphicon glyphicon-plus"></button>
+                            <button type="button" class="btn glyphicon glyphicon-pencil"></button>
+                            <button type="button" class="btn glyphicon glyphicon-remove"></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
