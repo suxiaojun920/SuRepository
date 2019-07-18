@@ -91,5 +91,7 @@ public class Demo{
 		String s=str.apply("abcd");
 
 		System.out.println(s);
+		
+		
 	}
 }
