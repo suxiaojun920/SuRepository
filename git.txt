@@ -1,0 +1,187 @@
+Git:
+  1:安装Git
+  2:设置用户名信息
+  	global 是全局配置文件 ,文件的位置在用户主目录下的.gitconfig文件 
+	system 是系统配置文件,文件的位置在etc下的gitconfig 
+	local是版本库配置文件,文件位置在.git/config 
+     $ git config --global user.name 'suxiaojun'
+     $ git config --blobal user.email 'suxie-1@163.com'
+
+  3:删除用户信息
+  	 $ git config --unset --global user.name
+	 $ git config --unset --global user.email
+
+  4:查看用户配置信息
+     $ git config --list
+
+  5:在当前的目录下创建目录
+   mkdir 目录名称
+
+  6:改变当前目录
+   cd 目录 (cd D:/)
+
+  7:查看当前目录路径
+   pwd
+
+  8:查看当前目录下的子目录和文件
+   ls
+
+  9:把文件添加到仓库
+   $ git add readme.txt
+
+  10:把修改提交到仓库
+   $ git commit -m '消息'
+
+  11:修改文本文件
+     vim maven.txt
+     按i插入数据(修改文件)
+     按ESC 结束编辑 Shift+ZZ 保存退出
+     cat maven.txt 查看文件
+     按了ESC后再输入冒号，在输入命令时，直接输入"q" 不正常退出(没有修改文件)
+     先按ESC，再输入冒号，在输入命令时，直接输入"q!" 不保存退出
+     先按ESC，再按冒号，在输入命令时，直接输入"!" 强制退出
+
+  commit可以一次提交很多文件，所以你可以多次add不同的文件
+
+  12:查看当前仓库的状态
+     git status
+
+    # On branch master
+	# Changes to be committed:  (已经在stage区, 等待添加到HEAD中的文件)
+	# (use "git reset HEAD <file>..." to unstage)
+	#
+	#modified: hello.py
+	#
+	# Changes not staged for commit: (有修改, 但是没有被添加到stage区的文件)
+	# (use "git add <file>..." to update what will be committed)
+	# (use "git checkout -- <file>..." to discard changes in working directory)
+	#
+	#modified: main.py
+	#
+	# Untracked files:(没有tracked过的文件, 即从没有add过的文件)
+	# (use "git add <file>..." to include in what will be committed)
+	#
+	#hello.pyc原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/git/git_status.html
+
+  13:查看修改的详细信息
+     git diff
+
+  14:增加修改
+     git add maven.txt
+
+  15:提交修改
+     git commit -m "修改信息"
+
+  16:查看文件修改历史
+     查看详细信息
+     git log
+     查看详细信息 一个版本显示一行
+     git log --pretty=oneline
+
+
+  17:回退到上一个版本(上一个版本是HEAD^ 上上个版本是HEAD^^ 回退100级 需要100个^ 所以可以写成 HEAD~100)
+     $ git reset --hard HEAD^
+     也可以指定回退的版本号(回退后回退跳过的版本git log看不见了 可以再以前的log上查询)
+     $ git reset --hard 1094a(可以利用git log 查看)
+
+  18:查看历史版本
+    用git reflog查看命令历史，以便确定要回到未来的哪个版本
+
+    //查看文件内容
+    cat maven.txt 
+
+    Git 三个区 (工作区-->暂存区-->版本库)
+
+    1:git diff 不加参数即默认比较工作区与暂存区
+    2:git diff --cached [文件] 比较暂存区与最新本地版本库（本地库中最近一次commit的内容）
+    3:git diff HEAD [文件] 比较工作区与最新本地版本库
+    4:git diff commit-id [文件]  比较工作区与指定commit-id的差异
+
+   Git比其他版本控制系统设计得优秀，因为Git跟踪并管理的是修改，而非文件
+
+   git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别
+
+   git checkout -- file可以丢弃工作区的修改
+
+   命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+
+	一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+
+	一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态
+
+   git checkout -- file命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令
+
+   命令git reset HEAD <file>可以把暂存区的修改撤销掉（unstage），重新放回工作区
+
+   git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本
+
+   	场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+	场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD <file>，就回到了场景1，第二步按场景1操作。
+
+	场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退 git reset --hard commitId，不过前提是没有推送到远程库
+
+	删除工作区文件
+	 $ rm test.txt
+
+	一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit
+
+	一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：
+
+	$ git checkout -- test.txt
+
+
+   生成远程仓库的key
+
+   查看是否存在.ssh
+   cd ~/.ssh 
+
+   创建文件夹
+   mkdir .ssh
+
+   自动在.ssh目录下生成id_rsa以及id_rsa_pub两个文件
+   $ ssh-keygen -t rsa -C "youremail@example.com"
+
+   登陆GitHub，打开“Account settings”，“SSH Keys”页面：
+
+   然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+   点“Add Key”，你就应该看到已经添加的Key
+
+
+   登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库
+   在Repository name填入learngit，其他保持默认设置，点击“Create repository”按钮，就成功地创建了一个新的Git仓库
+   目前，在GitHub上的这个learngit仓库还是空的，GitHub告诉我们，可以从这个仓库克隆出新的仓库，也可以把一个已有的本地仓库与之关联，然后，把本地仓库的内容推送到GitHub仓库。
+
+	现在，我们根据GitHub的提示，在本地的learngit仓库下运行命令：
+
+	//添加远程库 git remote add 远程库名称 远程库地址
+	$ git remote add origin git@github.com:michaelliao/learngit.git
+	请千万注意，把上面的michaelliao替换成你自己的GitHub账户名，否则，你在本地关联的就是我的远程库，关联没有问题，但是你以后推送是推不上去的，因为你的SSH Key公钥不在我的账户列表中。
+
+	添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库
+
+	把本地版本库的内容推送到远程服务器
+	$ git push -u origin master
+
+	//查看当前所有的远程库
+	$ git remote
+
+	//列出详细信息，在每一个名字后面列出其远程url
+	$ git remote -v
+
+	//查看指定的远程库
+	$ git remote show origin
+
+	//克隆远程库
+	$ git clone git@github.com:michaelliao/gitskills.git
+
+
+
+
+
+
+	
+
+	
+
+   
