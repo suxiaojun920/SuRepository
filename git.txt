@@ -87,7 +87,7 @@ Git:
   18:查看历史版本
     用git reflog查看命令历史，以便确定要回到未来的哪个版本
 
-    //查看文件内容
+    //查看文件内容 
     cat maven.txt 
 
     Git 三个区 (工作区-->暂存区-->版本库)
@@ -103,7 +103,7 @@ Git:
 
    git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别
 
-   git checkout -- file可以丢弃工作区的修改
+   git checkout -- file可以丢弃工作区的修改(工作区修改了 还没有git add ) git checkout -- git.txt 恢复暂存区版本到工作区
 
    命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
 
