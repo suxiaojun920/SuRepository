@@ -189,8 +189,14 @@ Git:
 
 	分支名称前面有*号 的表示当前的分支
 
-	master修改(在dev分支add 和 commit之后)
+	//合并分支(以下命令是把dev分支合并到当前分支(当前分支切换至master) 把dev的修改合并到master)
+	git merge dev
 
+	//删除分支(dev)
+	git branch -d dev
+
+	//分支
+	git checkout -b dev
 
 
 
