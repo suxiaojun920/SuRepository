@@ -189,7 +189,7 @@ Git:
 
 	分支名称前面有*号 的表示当前的分支
 
-
+	master修改(在dev分支add 和 commit之后)
 
 
 
