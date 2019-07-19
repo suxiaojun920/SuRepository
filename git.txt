@@ -90,7 +90,7 @@ Git:
     //查看文件内容 
     cat maven.txt 
 
-    Git 三个区 (工作区-->暂存区-->版本库)
+    Git 三个区 (工作区(Untracked(未跟踪)-->暂存区(Changes not staged for commit 改变暂存区未提交)-->版本库)
 
     1:git diff 不加参数即默认比较工作区与暂存区
     2:git diff --cached [文件] 比较暂存区与最新本地版本库（本地库中最近一次commit的内容）
@@ -192,20 +192,107 @@ Git:
 	//合并分支(以下命令是把dev分支合并到当前分支(当前分支切换至master) 把dev的修改合并到master)
 	git merge dev
 
+	注意到上面的Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快
+
 	//删除分支(dev)
 	git branch -d dev
 
-	//分支
-	git checkout -b dev
+	//分支合并冲突
+	1:git checkout -b dev(切换到dev分支)
+    2:修改内容 例如增加一行(dev 分支增加内容)
+    3:dev 分支上加入暂存区(git add git.txt)
+    4:dev 分支上提交到版本库(git commit -m "dev分支提交")
 
+    5:切换到master分支(git checkout master)
+    6:修改内容 例如增加一行(master 分支增加内容)
+    7:master 分支上加入暂存区(git add git.txt)
+    8:master 分支上提交到版本库(git commit -m "master分支提交")
+    //当前分支保持master(因为master分支是主分支 肯定是把其他分支合并到master分支)
+    //把dev分支合并到master分支
+    9:git merge dev (这个时候会报错，因为两个分支上存在修改了同一个文件)
 
-	master 分支增加内容
-	dev 分支修改的内容
+    打开文件会出现以下内容
+    <<<<<<< HEAD 当前分支的内容  ====== 分隔符(=====前后是两个版本不同的地方) >>>>>>> dev 其他分支
+    <<<<<<< HEAD
+	Creating a new branch is quick & simple.
+	=======
+	Creating a new branch is quick AND simple.
+	>>>>>>> dev
+
+	这个时候把冲突的地方手动修改了
+	1:保留两个分支不同的地方
+	Creating a new branch is quick & simple.
+	Creating a new branch is quick AND simple.
+	2:或者保留任意一个分支的内容
+	Creating a new branch is quick & simple.
+
+	10:然后在主分支master上add 和 commit
+	  git add git.txt
+	  git commit -m "master合并"
+
+	这个时候master分支就是解决完冲突的版本  dev分支还是原始dev分支的内容
+	可以不要用去管dev分支了(也可以删除dev分支(因为dev分支合并完成就没有存在的必要了))
+
+	通常在合并分支的时候如果dev修改了内容 add 和 commit成功后 但是切换到master分支没有做任何改动那么合并时
+	会使用Fast forward模式 就是让master直接指向dev(两个分支指向同一个时间点)
+
+	但是如果切换到master分支后master分支也修改了和dev分支相同的文件那么在合并的时候就会出现冲突，需手动解决
 	
+	通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
 
-
-
+	如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
 	
+	1:git checkout -b dev(创建并切换到dev分支)
+	2:修改文件(dev分支在git.txt 添加内容)
+	3:git add git.txt
+	4:git commit -m "修改git.txt(dev)"
+
+	5:git checout master(切换到master分支)
+	注意这个地方master没有修改git.txt内容 直接合并
+	如果使用 git merge dev (git会默认使用Fast forward模式 这样合并完成如果删除dev分支 那么dev分支的信息就丢失了)
+
+	所以可以禁用Fast forward模式
+
+	git merge --no-ff-m "合并消息" dev(被合并的分支名称) 其中--no-ff(参数表示禁用Fast forward模式)
+
+	$ git merge --no-ff -m "merge with no-ff" dev
+	Merge made by the 'recursive' strategy.
+	 readme.txt | 1 +
+	 1 file changed, 1 insertion(+)
+
+	因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+
+	合并后，我们用git log看看分支历史：
+
+	$ git log --graph --pretty=oneline --abbrev-commit
+	*   e1e9c68 (HEAD -> master) merge with no-ff
+	|\  
+	| * f52c633 (dev) add merge
+	|/  
+	*   cf810e4 conflict fixed
+	...
+	可以看到，不使用Fast forward模式 master 和 dev 指向是不一样的地方(Fast forward 模式合并 master和dev指向同一个地方)
+
+	合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并
+
+	场景
+	1:目前正在dev上工作，但是现在有一个bug分配下来，但是有不能提交现在的工作，又必须去修改bug
+	那么这个时候就可以现在暂时保存dev上的工作(不是add和commit) 就是保存目前的工作
+	$ git status
+	On branch dev
+	Changes to be committed:
+	  (use "git reset HEAD <file>..." to unstage)
+
+		new file:   hello.py
+
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git checkout -- <file>..." to discard changes in working directory)
+
+		modified:   readme.txt
+
+	从目前的status来看有一个新文件hello.py 在工作区没有提交
+
 
 	
 
