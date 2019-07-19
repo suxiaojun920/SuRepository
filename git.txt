@@ -97,6 +97,7 @@ Git:
     3:git diff HEAD [文件] 比较工作区与最新本地版本库
     4:git diff commit-id [文件]  比较工作区与指定commit-id的差异
     5:git diff --cached [commit-id] [文件] 比较暂存区与指定commit-id的差异
+    6:git diff [commit-id] [commit-id] 比较两个commit-id之间的差异
 
    Git比其他版本控制系统设计得优秀，因为Git跟踪并管理的是修改，而非文件
 
