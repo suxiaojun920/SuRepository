@@ -185,9 +185,11 @@ Git:
 	* master
 	  dev
 
+	 git checkout master 切换分支
+
 	分支名称前面有*号 的表示当前的分支
 
-	
+
 
 
 
