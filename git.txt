@@ -177,6 +177,20 @@ Git:
 	//克隆远程库
 	$ git clone git@github.com:michaelliao/gitskills.git
 
+	//创建分支
+	git checkout -b 分支名称(加上-b 相当于两条命令 git branch dev(创建分支dev)   git checkout dev(切换分支dev))
+
+	//查看分支
+	git branch
+	* master
+	  dev
+
+	分支名称前面有*号 的表示当前的分支
+
+	
+
+
+
 
 
 
