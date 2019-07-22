@@ -364,7 +364,7 @@ Git:
 	[feature-vulcan 287773e] add feature vulcan
 	 1 file changed, 2 insertions(+)
 	 create mode 100644 vulcan.py
-	 
+
 	切回dev，准备合并：
 
 	$ git checkout dev
@@ -387,9 +387,316 @@ Git:
 	Deleted branch feature-vulcan (was 287773e).
 	终于删除成功！
 
+	多人协作:
+	当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
 
+	要查看远程库的信息，用git remote：
 
+	$ git remote
+	origin
 
+	或者，用git remote -v显示更详细的信息：
+	$ git remote -v
+	origin  https://github.com/suxiaojun920/SuRepository.git (fetch)
+	origin  https://github.com/suxiaojun920/SuRepository.git (push)
+
+	上面显示了可以抓取和推送的origin的地址。如果没有推送权限，就看不到push的地址。
+
+	推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+
+	$ git push origin master
 	
+	如果要推送其他分支，比如dev，就改成：
+	$ git push origin dev
+		
+	抓取分支
+	多人协作时，大家都会往master和dev分支上推送各自的修改。
 
+	现在，模拟一个你的小伙伴，可以在另一台电脑（注意要把SSH Key添加到GitHub）或者同一台电脑的另一个目录下克隆：
+
+	$ git clone git@github.com:suxiaojun920/SuRepository.git
+	Cloning into 'learngit'...
+	remote: Counting objects: 40, done.
+	remote: Compressing objects: 100% (21/21), done.
+	remote: Total 40 (delta 14), reused 40 (delta 14), pack-reused 0
+	Receiving objects: 100% (40/40), done.
+	Resolving deltas: 100% (14/14), done.
+
+	当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。不信可以用git branch命令看看：
+
+	$ git branch
+	* master
+
+	现在，你的小伙伴要在dev分支上开发，就必须创建远程origin的dev分支到本地，于是他用这个命令创建本地dev分支：
+
+	创建分支并切换到新创建的分支
+	$ git checkout -b dev origin/dev
+
+	现在，他就可以在dev上继续修改，然后，时不时地把dev分支push到远程：
+	$ git add env.txt
+
+	$ git commit -m "add env"
+	[dev 7a5e5dd] add env
+	 1 file changed, 1 insertion(+)
+	 create mode 100644 env.txt
+
+	$ git push origin dev
+	Counting objects: 3, done.
+	Delta compression using up to 4 threads.
+	Compressing objects: 100% (2/2), done.
+	Writing objects: 100% (3/3), 308 bytes | 308.00 KiB/s, done.
+	Total 3 (delta 0), reused 0 (delta 0)
+	To github.com:suxiaojun920/SuRepository.git
+	   f52c633..7a5e5dd  dev -> dev
+
+	你的小伙伴已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件作了修改，并试图推送：
+
+	$ cat env.txt
+	env
+
+	$ git add env.txt
+
+	$ git commit -m "add new env"
+	[dev 7bd91f1] add new env
+	 1 file changed, 1 insertion(+)
+	 create mode 100644 env.txt
+
+	$ git push origin dev
+	To github.com:suxiaojun920/SuRepository.git
+	 ! [rejected]        dev -> dev (non-fast-forward)
+	error: failed to push some refs to 'git@github.com:suxiaojun920/SuRepository.git'
+	hint: Updates were rejected because the tip of your current branch is behind
+	hint: its remote counterpart. Integrate the remote changes (e.g.
+	hint: 'git pull ...') before pushing again.
+	hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+	推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
+
+	$ git pull
+	There is no tracking information for the current branch.
+	Please specify which branch you want to merge with.
+	See git-pull(1) for details.
+
+	    git pull <remote> <branch>
+
+	If you wish to set tracking information for this branch you can do so with:
+		git branch --set-upstream-to=origin/<branch> dev
+
+
+	git pull也失败了，原因是没有指定本地dev分支与远程origin/dev分支的链接，根据提示，设置dev和origin/dev的链接：
+
+	$ git branch --set-upstream-to=origin/dev dev
+	Branch 'dev' set up to track remote branch 'dev' from 'origin'.
    
+	再pull：
+	$ git pull
+	Auto-merging env.txt
+	CONFLICT (add/add): Merge conflict in env.txt
+	Automatic merge failed; fix conflicts and then commit the result.
+
+	这回git pull成功，但是合并有冲突，需要手动解决，解决的方法和分支管理中的解决冲突完全一样。解决后，提交，再push：
+
+	$ git commit -m "fix env conflict"
+	[dev 57c53ab] fix env conflict
+
+	$ git push origin dev
+	Counting objects: 6, done.
+	Delta compression using up to 4 threads.
+	Compressing objects: 100% (4/4), done.
+	Writing objects: 100% (6/6), 621 bytes | 621.00 KiB/s, done.
+	Total 6 (delta 0), reused 0 (delta 0)
+	To github.com:michaelliao/learngit.git
+	   7a5e5dd..57c53ab  dev -> dev
+
+	因此，多人协作的工作模式通常是这样：
+
+	首先，可以试图用git push origin <branch-name>推送自己的修改；
+
+	如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+
+	如果合并有冲突，则解决冲突，并在本地提交；
+
+	没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！
+
+	如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>。
+
+	这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+
+	总结:
+
+	查看远程库信息，使用git remote -v；
+
+	本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+	从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+	在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+	建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+	从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+	标签:
+	发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
+
+	Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
+
+	Git有commit，为什么还要引入tag？
+
+	“请把上周一的那个版本打包发布，commit号是6a5819e...”
+
+	“一串乱七八糟的数字不好找！”
+
+	如果换一个办法：
+
+	“请把上周一的那个版本打包发布，版本号是v1.2”
+
+	“好的，按照tag v1.2查找commit就行！”
+
+	所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
+
+	在Git中打标签非常简单，首先，切换到需要打标签的分支上：
+
+	$ git branch
+	* dev
+	  master
+	$ git checkout master
+	Switched to branch 'master'
+	然后，敲命令git tag <name>就可以打一个新标签：
+
+	$ git tag v1.0
+	可以用命令git tag查看所有标签：
+
+	$ git tag
+	v1.0
+	默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是周五了，但应该在周一打的标签没有打，怎么办？
+
+	方法是找到历史提交的commit id，然后打上就可以了：
+
+	$ git log --pretty=oneline --abbrev-commit
+	12a631b (HEAD -> master, tag: v1.0, origin/master) merged bug fix 101
+	4c805e2 fix bug 101
+	e1e9c68 merge with no-ff
+	f52c633 add merge
+	cf810e4 conflict fixed
+	5dc6824 & simple
+	14096d0 AND simple
+	b17d20e branch test
+	d46f35e remove test.txt
+	b84166e add test.txt
+	519219b git tracks changes
+	e43a48b understand how stage works
+	1094adb append GPL
+	e475afc add distributed
+	eaadf4e wrote a readme file
+	比方说要对add merge这次提交打标签，它对应的commit id是f52c633，敲入命令：
+
+	$ git tag v0.9 f52c633
+	再用命令git tag查看标签：
+
+	$ git tag
+	v0.9
+	v1.0
+	注意，标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息：
+
+	$ git show v0.9
+	commit f52c63349bc3c1593499807e5c8e972b82c8f286 (tag: v0.9)
+	Author: Michael Liao <askxuefeng@gmail.com>
+	Date:   Fri May 18 21:56:54 2018 +0800
+
+	    add merge
+
+	diff --git a/readme.txt b/readme.txt
+	...
+	可以看到，v0.9确实打在add merge这次提交上。
+
+	还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
+
+	$ git tag -a v0.1 -m "version 0.1 released" 1094adb
+	用命令git show <tagname>可以看到说明文字：
+
+	$ git show v0.1
+	tag v0.1
+	Tagger: Michael Liao <askxuefeng@gmail.com>
+	Date:   Fri May 18 22:48:43 2018 +0800
+
+	version 0.1 released
+
+	commit 1094adb7b9b3807259d8cb349e7df1d4d6477073 (tag: v0.1)
+	Author: Michael Liao <askxuefeng@gmail.com>
+	Date:   Fri May 18 21:06:15 2018 +0800
+
+	    append GPL
+
+	diff --git a/readme.txt b/readme.txt
+	...
+	 注意：标签总是和某个commit挂钩。如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签。
+
+	总结:
+	命令git tag <tagname>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+
+	命令git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+
+	命令git tag可以查看所有标签。
+
+	标签操作
+	如果标签打错了，也可以删除：
+
+	$ git tag -d v0.1
+	Deleted tag 'v0.1' (was f15b0dd)
+	因为创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除。
+
+	如果要推送某个标签到远程，使用命令git push origin <tagname>：
+
+	$ git push origin v1.0
+	Total 0 (delta 0), reused 0 (delta 0)
+	To github.com:michaelliao/learngit.git
+	 * [new tag]         v1.0 -> v1.0
+	或者，一次性推送全部尚未推送到远程的本地标签：
+
+	$ git push origin --tags
+	Total 0 (delta 0), reused 0 (delta 0)
+	To github.com:michaelliao/learngit.git
+	 * [new tag]         v0.9 -> v0.9
+	如果标签已经推送到远程，要删除远程标签就麻烦一点，先从本地删除：
+
+	$ git tag -d v0.9
+	Deleted tag 'v0.9' (was f52c633)
+	然后，从远程删除。删除命令也是push，但是格式如下：
+
+	$ git push origin :refs/tags/v0.9
+	To github.com:michaelliao/learngit.git
+	 - [deleted]         v0.9
+	要看看是否真的从远程库删除了标签，可以登陆GitHub查看。
+
+	小结
+	命令git push origin <tagname>可以推送一个本地标签；
+
+	命令git push origin --tags可以推送全部未推送过的本地标签；
+
+	命令git tag -d <tagname>可以删除一个本地标签；
+
+	命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+
+	我们一直用GitHub作为免费的远程仓库，如果是个人的开源项目，放到GitHub上是完全没有问题的。其实GitHub还是一个开源协作社区，通过GitHub，既可以让别人参与你的开源项目，也可以参与别人的开源项目。
+
+	在GitHub出现以前，开源项目开源容易，但让广大人民群众参与进来比较困难，因为要参与，就要提交代码，而给每个想提交代码的群众都开一个账号那是不现实的，因此，群众也仅限于报个bug，即使能改掉bug，也只能把diff文件用邮件发过去，很不方便。
+
+	但是在GitHub上，利用Git极其强大的克隆和分支功能，广大人民群众真正可以第一次自由参与各种开源项目了。
+
+	如何参与一个开源项目呢？比如人气极高的bootstrap项目，这是一个非常强大的CSS框架，你可以访问它的项目主页https://github.com/twbs/bootstrap，点“Fork”就在自己的账号下克隆了一个bootstrap仓库，然后，从自己的账号下clone：
+
+	git clone git@github.com:michaelliao/bootstrap.git
+	一定要从自己的账号下clone仓库，这样你才能推送修改。如果从bootstrap的作者的仓库地址git@github.com:twbs/bootstrap.git克隆，因为没有权限，你将不能推送修改。
+
+	Bootstrap的官方仓库twbs/bootstrap、你在GitHub上克隆的仓库my/bootstrap，以及你自己克隆到本地电脑的仓库
+
+	如果你想修复bootstrap的一个bug，或者新增一个功能，立刻就可以开始干活，干完后，往自己的仓库推送。
+
+	如果你希望bootstrap的官方库能接受你的修改，你就可以在GitHub上发起一个pull request。当然，对方是否接受你的pull request就不一定了
+
+	在GitHub上，可以任意Fork开源仓库；
+
+	自己拥有Fork后的仓库的读写权限；
+
+	可以推送pull request给官方仓库来贡献代码。
