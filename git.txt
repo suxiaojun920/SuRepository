@@ -13,6 +13,12 @@ Git:
 
   4:查看用户配置信息
      $ git config --list
+    查询当前仓库级别配置(优先级最高)
+     $ git config --local --list
+    查看当前用户级别配置
+     $ git config --global --list
+    查询当前系统级别配置
+     $ git config --system --list
 
   5:在当前的目录下创建目录
    mkdir 目录名称
