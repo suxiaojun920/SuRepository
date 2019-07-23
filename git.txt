@@ -736,4 +736,5 @@ Git:
 	$ git push -u github master
 	$ git push --set-upstream github master  两个命令都是一样的都是push到远程仓库并指定为默认 这个命令一行可以使用 git push
 
-	
+
+	//测试默认提交
