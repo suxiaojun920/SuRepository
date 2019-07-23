@@ -720,7 +720,7 @@ Git:
 
 	$ git remote add github git@github.com:suxiaojun920/SuRepository.git
 
-	//push 到gitee库
+	//push 到gitee库 会提示ssh的问题 输入yes
 	$ git push gitee
 
 	//取gitee 上的和本地的master合并
