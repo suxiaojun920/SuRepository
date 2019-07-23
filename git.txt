@@ -706,3 +706,28 @@ Git:
 	自己拥有Fork后的仓库的读写权限；
 
 	可以推送pull request给官方仓库来贡献代码。
+
+	gitee 
+
+	//查看当前连接的所有的远程库
+	$ git remote -v
+
+	//删除远程库
+	$ git remote rm origin
+
+	//添加远程库(名称为gitee)
+	$ git remote add gitee git@gitee.com:suxiaojun920/SuRepository.git
+
+	$ git remote add github git@github.com:suxiaojun920/SuRepository.git
+
+	//push 到gitee库
+	$ git push gitee
+
+	//取gitee 上的和本地的master合并
+	$ git pull gitee master
+
+	//取github 上的和本地的master合并
+	$ git pull github master
+
+	//取远程的origin的master主分支下载最新的版本到origin/master分支上 但不合并
+	$ git fetch gitee master
